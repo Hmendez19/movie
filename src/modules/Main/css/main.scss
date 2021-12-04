@@ -1,0 +1,10 @@
+body{
+    background: linear-gradient(rgba(34,49,67,.94),rgba(34,49,67,.95)),url('../image/body_wall.jpg');
+    background: -moz-linear-gradient(rgba(34,49,67,.94),rgba(34,49,67,.95)),url('../image/body_wall.jpg');
+    background: -webkit-linear-gradient(rgba(34,49,67,.94),rgba(34,49,67,.95)),url('../image/body_wall.jpg');
+    background: -o-linear-gradient(rgba(34,49,67,.94),rgba(34,49,67,.95)),url('../image/body_wall.jpg');
+}
+
+main{
+    margin-top: 5rem;
+}
