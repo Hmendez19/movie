@@ -2,6 +2,21 @@
     height: 300px;
 }
 
+.container-body-title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.share-icon:hover,.favorite-icon:hover{
+    transform: scale(1.3);
+    cursor: pointer;
+}
+
+.share-icon:active.favorite-icon:active{
+    transform: scale(1);
+}
+
 .card-footer{
     display: flex;
     justify-content: space-between;

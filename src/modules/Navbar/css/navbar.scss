@@ -1,4 +1,12 @@
+$color-white:#ffffff;
+
 .navbar{
+
+    .navbar-brand{
+        border-right: 1px solid #fff;
+        padding-right: 19px;
+    }
+
     .input-search{
         border-top-right-radius: 0px;
         border-bottom-right-radius: 0px;
@@ -7,5 +15,33 @@
     .button-search{
         border-top-left-radius: 0px;
         border-bottom-left-radius: 0px;
+    }
+
+    .nav-link-menu{
+        color: #fff;
+        font-size: large;
+    }
+
+    .menu{
+        button{
+            background: transparent;
+            border: none;
+        }
+
+        >li>button:hover{
+            color:$color-white;
+            border-bottom: 1px solid #cccc40;
+        }
+     
+        >li>button:active{
+            border-bottom: 1px solid #cccc40;
+        }
+
+        .dropdown-menu{
+            li:hover button{
+                background-color: #1d1d1d;
+                color:$color-white;
+            }
+        }
     }
 }

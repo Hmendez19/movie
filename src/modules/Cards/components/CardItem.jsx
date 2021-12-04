@@ -1,11 +1,18 @@
 import FavoriteIcon from "./FavoriteIcon";
-const CardItem = () => {
+import ShareIcon from "./ShareIcon";
+const CardItem = ({item}) => {
+    console.log(item);
+    const {title,info}=item;
+    const {image_url,release_date}=info;
     return <>
         <div className="col">
             <div className="card h-100">
-                <img src="https://ia.media-imdb.com/images/M/MV5BMTQyMDE0MTY0OV5BMl5BanBnXkFtZTcwMjI2OTI0OQ@@._V1_SX400_.jpg" className="card-img-top card-img-movie" alt="..." />
+                <img src={image_url} className="card-img-top card-img-movie" alt="..." />
                 <div className="card-body">
-                    <h5 className="card-title fs-4">Rush</h5>
+                    <div className='container-body-title'>
+                        <h5 className="card-title fs-4">{title}</h5>
+                        <ShareIcon/>
+                    </div>
                     <div>
                         <div>
                             <label className='fw-bold d-block'>Genero:</label>
@@ -13,7 +20,7 @@ const CardItem = () => {
                         </div>
                         <div>
                             <label className='fw-bold d-block'>fecha de estreno:</label>
-                            <span>2013-09-02</span>
+                            <span>{release_date}</span>
                         </div>
                     </div>
                 </div>

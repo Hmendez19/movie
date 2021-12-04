@@ -1,34 +1,51 @@
 import { useEffect, useState } from "react";
-import { API_MOVIE,ERROR_MESSAGE } from "../utils/Config";
+import { API_MOVIE, ERROR_MESSAGE } from "../utils/Config";
+import Swal from 'sweetalert2'
+import { useMovieStore } from "../store/store";
 
 const useFetch = () => {
     const [data, setData] = useState([]);
     const [isLoader, setIsLoader] = useState(false);
-    const [query,setQuery]=useState('');
+    const [query, setQuery] = useState('');
+    const addMovie=useMovieStore((state)=>state.addMovie);
 
     useEffect(() => {
         fetchData(query);
     }, [query]);
 
 
-    const fetchData = async (_query) => {
+    const fetchData = async (_query='') => {
         try {
             setIsLoader(true);
-            const response = await fetch(`${API_MOVIE}?s=${_query}`);
+            const response = await fetch(`${API_MOVIE}`,{
+                headers : { 
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json'
+                 }
+              });
+
             if (!response.ok) {
+                console.log("si entra");
                 setData([]);
             }
-            const { results } = await response.json();
-            setData(results);
+            const jsonData= await response.json();
+            addMovie(jsonData);
+            setData(jsonData);
         } catch (error) {
-            alert(ERROR_MESSAGE);
+            Swal.fire({
+                title: ERROR_MESSAGE,
+                text: '',
+                icon: 'error',
+                showConfirmButton: false,
+                timer: 3500
+              });
             console.log(error);
         } finally {
             setIsLoader(false);
         }
     };
 
-    return [data, isLoader,setQuery];
+    return [data, isLoader, setQuery];
 }
 
 export default useFetch;
