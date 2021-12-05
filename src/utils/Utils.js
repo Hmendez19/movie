@@ -11,3 +11,8 @@ export const sliceIntoChunks = (arr, chunkSize) => {
 export const convertLocalDate = (date) => {
     return (new Date(date)).toLocaleString('es-US');
 }
+
+export const stringUnacent=(data)=>{
+    let _query = data.toLowerCase();
+    return _query.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}

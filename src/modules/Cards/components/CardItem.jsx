@@ -3,10 +3,13 @@ import ShareIcon from "./ShareIcon";
 import { ModalManager } from "react-dynamic-modal";
 import Swal from 'sweetalert2';
 import ModalShare from "../../ModalShare/ModalShare";
-import {convertLocalDate} from "../../../utils/Utils";
+import { convertLocalDate } from "../../../utils/Utils";
+import { useMovieStore } from "../../../store/store";
 const CardItem = ({ item }) => {
     const { title, info } = item;
     const { image_url, release_date, genres } = info;
+
+    const addFavoriteMovie = useMovieStore((state) => state.addFavoriteMovie);
 
     const handlerFavoriteclick = (e) => {
         e.preventDefault();
@@ -16,17 +19,19 @@ const CardItem = ({ item }) => {
             icon: 'success',
             showConfirmButton: false,
             timer: 3500
-          });
+        });
+        addFavoriteMovie(item);
         console.log("Favorite", item);
+
     }
 
     const handlerShareclick = (e) => {
         e.preventDefault();
         console.log("Share", item);
-        ModalManager.open(<ModalShare item={item} handlerSendMailer={handlerSendMailer} onRequestClose={() => console.log("Modal cerrado")}/>);
+        ModalManager.open(<ModalShare item={item} handlerSendMailer={handlerSendMailer} onRequestClose={() => console.log("Modal cerrado")} />);
     }
 
-    const handlerSendMailer=(e,item)=>{
+    const handlerSendMailer = (e, item) => {
         e.preventDefault();
         console.log(item);
     }
