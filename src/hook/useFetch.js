@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { API_MOVIE, ERROR_MESSAGE } from "../utils/Config";
-import Swal from 'sweetalert2'
+import { API_MOVIE, ERROR_MESSAGE, MAX_NUMBER_CARDS } from "../utils/Config";
+import Swal from 'sweetalert2';
 import { useMovieStore } from "../store/store";
 
 const useFetch = () => {
@@ -25,10 +25,10 @@ const useFetch = () => {
               });
 
             if (!response.ok) {
-                console.log("si entra");
                 setData([]);
             }
-            const jsonData= await response.json();
+            let jsonData= await response.json();
+            console.log(jsonData);
             addMovie(jsonData);
             setData(jsonData);
         } catch (error) {

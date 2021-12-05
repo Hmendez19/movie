@@ -14,11 +14,16 @@
 }
 
 .share-icon:active.favorite-icon:active{
-    transform: scale(1);
+    transform: scale(0.5);
 }
 
 .card-footer{
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.button-wrapper-icon{
+    background: transparent!important;
+    border: none!important;
 }

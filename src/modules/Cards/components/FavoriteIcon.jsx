@@ -1,5 +1,5 @@
 const FavoriteIcon = (props) => {
-    const { color = 'red' } = props;
+    const { color = 'red'} = props;
     return <>
         <svg
             title='Agregar a favorito'

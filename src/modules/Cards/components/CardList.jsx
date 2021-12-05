@@ -6,7 +6,7 @@ const CardList = () => {
     return <>
         <div className="row row-cols-1 row-cols-md-4 mb-4 g-4">
             {
-                movies.map(item=>(<CardItem key={item.image_url} item={item}/>))
+                movies.map((item,index)=>(<CardItem key={index} item={item}/>))
             }
         </div>
     </>

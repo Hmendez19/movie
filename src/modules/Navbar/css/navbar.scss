@@ -3,7 +3,6 @@ $color-white:#ffffff;
 .navbar{
 
     .navbar-brand{
-        border-right: 1px solid #fff;
         padding-right: 19px;
     }
 
@@ -43,5 +42,29 @@ $color-white:#ffffff;
                 color:$color-white;
             }
         }
+    }
+}
+
+@media (max-width:767px){
+    nav>div:first-child{
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: column;
+
+        .navbar-nav{
+            display: flex;
+            justify-content: space-evenly;
+            flex-direction: row;
+            width: 100%;
+        }
+
+        .container-search{
+            width: 100%!important;
+        }
+    }
+
+
+    .container-subtitle{
+        margin-top: 10rem!important;
     }
 }
