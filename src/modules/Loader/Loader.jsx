@@ -1,14 +1,16 @@
-import ContentLoader from "react-content-loader";
 
+import "./css/Loader.css";
 const Loader = () => {
-    return <>
-     <ContentLoader>
-        <rect x="0" y="0" rx="5" ry="5" width="70" height="70" />
-        <rect x="80" y="0" rx="4" ry="4" width="70" height="70"/>
-        <rect x="160" y="0" rx="4" ry="4" width="70" height="70"/>
-        <rect x="240" y="0" rx="4" ry="4" width="70" height="70"/>
-      </ContentLoader>
-    </>
+  return <>
+    <div className="container-loader">
+      <div className="loader-center">
+        <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        <div>
+          <p className="fs-bold fs-4 text-white">Por favor espere</p>
+        </div>
+      </div>
+    </div>
+  </>
 }
 
 export default Loader;

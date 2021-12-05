@@ -34,7 +34,7 @@ const CardItem = ({ item }) => {
     return <>
         <div className="col">
             <div className="card h-100">
-                <img src={image_url} className="card-img-top card-img-movie" alt="..." />
+                <img src={image_url} className="card-img-top card-img-movie" alt={`Sin imagen ${title}`} />
                 <div className="card-body">
                     <div className='container-body-title'>
                         <h5 className="card-title fs-4">{title}</h5>
