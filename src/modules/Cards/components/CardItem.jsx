@@ -5,29 +5,38 @@ import Swal from 'sweetalert2';
 import ModalShare from "../../ModalShare/ModalShare";
 import { convertLocalDate } from "../../../utils/Utils";
 import { useMovieStore } from "../../../store/store";
-const CardItem = ({ item }) => {
+import { useEffect, useState } from "react";
+const CardItem = (props) => {
+    const { item, isFavorite = false } = props;
+    const [isFavoriteItem, setIsFavoriteItem] = useState(isFavorite);
     const { title, info } = item;
     const { image_url, release_date, genres } = info;
 
     const addFavoriteMovie = useMovieStore((state) => state.addFavoriteMovie);
+    const favoriteMovies = useMovieStore((state) => state.favoriteMovies);
+    const flag=(favoriteMovies.length>0 && favoriteMovies.find(mv => mv.info.image_url === image_url)!==undefined);
 
-    const handlerFavoriteclick = (e) => {
+
+    const handlerFavoriteclick = (e,_flag) => {
         e.preventDefault();
-        Swal.fire({
-            title: title,
-            text: 'Agregado a favorito',
-            icon: 'success',
-            showConfirmButton: false,
-            timer: 3500
+
+        setIsFavoriteItem(prev => {
+            let _stateFavorite = !_flag;
+            addFavoriteMovie(item, _stateFavorite);
+            Swal.fire({
+                title: title,
+                text: _stateFavorite ? 'Agregado a favorito' : "Removido de favorito",
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 3500
+            });
+            return _stateFavorite;
         });
-        addFavoriteMovie(item);
-        console.log("Favorite", item);
 
     }
 
     const handlerShareclick = (e) => {
         e.preventDefault();
-        console.log("Share", item);
         ModalManager.open(<ModalShare item={item} handlerSendMailer={handlerSendMailer} onRequestClose={() => console.log("Modal cerrado")} />);
     }
 
@@ -60,9 +69,14 @@ const CardItem = ({ item }) => {
                     </div>
                 </div>
                 <div className="card-footer bg-dark">
-                    <span className='text-light'>Agregar a favoritos</span>
-                    <button className='button-wrapper-icon' title="Clic para agregar/quitar a favorito" onClick={(e) => handlerFavoriteclick(e)} >
-                        <FavoriteIcon />
+                    {
+                        flag && <span className='text-light'>Remover de favoritos</span>
+                    }
+                    {
+                        !flag && <span className='text-light'>Agregar a favoritos</span>
+                    }
+                    <button className='button-wrapper-icon' title="Clic para agregar/quitar a favorito" onClick={(e) => handlerFavoriteclick(e,flag)} >
+                        <FavoriteIcon isFavoriteItem={flag} />
                     </button>
                 </div>
             </div>

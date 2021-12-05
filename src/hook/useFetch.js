@@ -7,30 +7,26 @@ const useFetch = () => {
     const [data, setData] = useState([]);
     const [isLoader, setIsLoader] = useState(false);
     const [query, setQuery] = useState('');
-    const addMovie=useMovieStore((state)=>state.addMovie);
+    const addMovie = useMovieStore((state) => state.addMovie);
 
     useEffect(() => {
         fetchData(query);
     }, [query]);
 
 
-    const fetchData = async (_query='') => {
+    const fetchData = async (_query = '') => {
         try {
             setIsLoader(true);
-            const response = await fetch(`${API_MOVIE}`,{
-                headers : { 
-                  'Content-Type': 'application/json',
-                  'Accept': 'application/json'
-                 }
-              });
+            const response = await fetch(`${API_MOVIE}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            });
 
-            if (!response.ok) {
-                setData([]);
-            }
-            let jsonData= await response.json();
-            console.log(jsonData);
-            addMovie(jsonData);
-            setData(jsonData);
+            (!response.ok) && setDataStore();
+            let jsonData = await response.json();
+            setDataStore(jsonData);
         } catch (error) {
             Swal.fire({
                 title: ERROR_MESSAGE,
@@ -38,12 +34,18 @@ const useFetch = () => {
                 icon: 'error',
                 showConfirmButton: false,
                 timer: 3500
-              });
+            });
+            setDataStore();
             console.log(error);
         } finally {
             setIsLoader(false);
         }
     };
+
+    const setDataStore = (_data = []) => {
+        addMovie(_data);
+        setData(_data);
+    }
 
     return [data, isLoader, setQuery];
 }

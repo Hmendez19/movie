@@ -27,3 +27,16 @@
     background: transparent!important;
     border: none!important;
 }
+
+
+.figure-not-movie{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 4rem;
+
+    img{
+        width: 25%!important;
+    }
+}

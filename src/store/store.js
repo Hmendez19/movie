@@ -6,8 +6,22 @@ let movieStore = (set, get) => ({
   movies: [],
   filterMovies: [],
   genresMovies: [],
-  favoriteMovies:[],
+  favoriteMovies: [],
+  showFavoriteMovie: false,
+  showFIlterMovie: false,
+  clearFilterMovie: () => {
+    set((state) => ({ filterMovies: [] }));
+    get().setStatesFilterMovie(false);
+  },
+  setStatesFavoriteMovie: (_state) => {
+    set((state) => ({ showFavoriteMovie: _state }));
+  },
+  setStatesFilterMovie: (_state) => {
+    set((state) => ({ showFIlterMovie: _state }));
+  },
   addMovie: (movies) => {
+
+    /*Filtrar los generos para luego almacenarlo y mostrarlo en la lista */
     let _genres = "";
     movies.filter((_item) => {
       // Obtener los generos
@@ -21,10 +35,11 @@ let movieStore = (set, get) => ({
     _arrayGenresMovies.sort();
     set((state) => ({ genresMovies: _arrayGenresMovies }))
 
+    //almacenar las peliculas
     set((state) => ({ movies }))
   },
   findMovie: (query, onlyGenre = false) => {
-   
+
     const _movies = get().movies
     let _query = stringUnacent(query);
     let _findsMovies = [];
@@ -52,13 +67,26 @@ let movieStore = (set, get) => ({
       return _findsMovies;
     });
 
+    get().setStatesFavoriteMovie(false);
+    get().setStatesFilterMovie(true);
+
     //Almacenarlo en el store
     set((state) => ({ filterMovies: _findsMovies }));
-     return get().filterMovies;
+    return get().filterMovies;
   },
-  addFavoriteMovie:(movie)=>{
-    let arrayFavoritieMovies=[...get().favoriteMovies,movie];
-    set((state) => ({ favoriteMovies: [...new Set(arrayFavoritieMovies)] }));
+  addFavoriteMovie: (movie, isFavoritie) => {
+    let arrayFavoritieMovies = [...get().favoriteMovies, movie];
+    let _arrayFavoritieMovies = [...new Set(arrayFavoritieMovies)];
+
+    if (!isFavoritie) {
+      _arrayFavoritieMovies = _arrayFavoritieMovies.filter(item => {
+        const { info } = item;
+        const { image_url } = info;
+        return (image_url !== movie.info.image_url) && item;
+      });
+    }
+
+    set((state) => ({ favoriteMovies: _arrayFavoritieMovies }));
   }
 })
 
