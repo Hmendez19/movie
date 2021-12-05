@@ -70,8 +70,13 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
 
+### Instalar paquetes
+- npm install
 ### json-server
 - instalar json-server
    - npm install -g json-server
 cd src/FakeRequests/
 json-server --watch moviedata.json 
+  
+### ejecutar aplicación
+- npm start

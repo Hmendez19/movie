@@ -5,7 +5,7 @@ const Menu = () => {
     const findMovie = useMovieStore((state) => state.findMovie);
     const handlerFindMovieByGenres=(e,genre)=>{
         e.preventDefault();
-        let _findMovies=findMovie(genre);
+        let _findMovies=findMovie(genre,true);
         if(_findMovies.length===0 || _findMovies===undefined){
             Swal.fire({
                 title: 'Aviso',
