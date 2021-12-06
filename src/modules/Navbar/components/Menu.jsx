@@ -5,6 +5,7 @@ const Menu = () => {
     const clearFilterMovie = useMovieStore((state) => state.clearFilterMovie);
     const setStatesFavoriteMovie = useMovieStore((state) => state.setStatesFavoriteMovie);
     const setStatesFilterMovie = useMovieStore((state) => state.setStatesFilterMovie);
+    const clearDateRange = useMovieStore((state) => state.clearDateRange);
 
     const handlerFindMovieByGenres = (e, genre) => {
         e.preventDefault();
@@ -12,12 +13,18 @@ const Menu = () => {
         let _findMovies = findMovie(genre, true);
         //Desactivar la seccion de peliculas favoritas
         setStatesFavoriteMovie(false);
+
+        //limpiar los filtros de fechas por si estan activos
+        clearDateRange();
     }
 
     const handlerShowAllMovies = (e) => {
         e.preventDefault();
         // Se limpia el filtro para solo visualizar todas las peliculas
         clearFilterMovie();
+
+        //limpiar los filtros de fechas por si estan activos
+        clearDateRange();
 
         // desactivar la seccion de peliculas favoritas
         setStatesFavoriteMovie(false);
@@ -27,6 +34,9 @@ const Menu = () => {
         e.preventDefault();
         // Se limpia el filtro para solo visualizar las peliculas favoritas
         clearFilterMovie();
+
+        //limpiar los filtros de fechas por si estan activos
+        clearDateRange();
 
         // activar la seccion de peliculas favoritas
         setStatesFavoriteMovie(true);

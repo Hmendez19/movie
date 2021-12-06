@@ -12,7 +12,27 @@ export const convertLocalDate = (date) => {
     return (new Date(date)).toLocaleString('es-US');
 }
 
-export const stringUnacent=(data)=>{
+export const stringUnacent = (data) => {
     let _query = data.toLowerCase();
     return _query.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+
+export const getDateRange = (initialDate="", finalate = "") => {
+    let datesRange = [];
+    let _arrFecha="";
+    let start = new Date(initialDate);
+    let end = new Date(finalate);
+    let loop = new Date(start);
+    while (loop <= end) {
+        let localDate = loop.toLocaleString('es-US');
+        _arrFecha = localDate.split(" ");
+        datesRange.push(_arrFecha[0]);
+        let newDate = loop.setDate(loop.getDate() + 1);
+        loop = new Date(newDate);
+    }
+    datesRange.shift();
+    _arrFecha = finalate.split("-");
+    datesRange.push(`${_arrFecha[2]}/${_arrFecha[1]}/${_arrFecha[0]}`);
+    return datesRange;
 }

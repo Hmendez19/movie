@@ -1,6 +1,6 @@
 import create from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
-import { stringUnacent } from '../utils/Utils'
+import { convertLocalDate, stringUnacent } from '../utils/Utils'
 
 let movieStore = (set, get) => ({
   movies: [],
@@ -9,15 +9,58 @@ let movieStore = (set, get) => ({
   favoriteMovies: [],
   showFavoriteMovie: false,
   showFIlterMovie: false,
+  dataDateRange: [],
   clearFilterMovie: () => {
     set((state) => ({ filterMovies: [] }));
+    set((state) => ({ dataRangeDate: [] }));
     get().setStatesFilterMovie(false);
+  },
+  clearDateRange: () => {
+    set((state) => ({ dataDateRange: [] }));
   },
   setStatesFavoriteMovie: (_state) => {
     set((state) => ({ showFavoriteMovie: _state }));
   },
   setStatesFilterMovie: (_state) => {
     set((state) => ({ showFIlterMovie: _state }));
+  },
+  findMovieByDateRange: (_dateRange = []) => {
+    let isFavorite = get().showFavoriteMovie;
+    let isFilter = get().showFIlterMovie;
+
+    if (_dateRange.length === 0) {
+      get().clearDateRange();
+      if (isFavorite) {
+         get().clearFilterMovie();
+      } else if (isFilter) {
+        get().setStatesFavoriteMovie(false);
+      } else {
+        get().setStatesFavoriteMovie(false);
+        get().clearFilterMovie();
+      }
+    } else {
+      let _tmpDataRange = [];
+
+      if (isFavorite) {
+        _tmpDataRange = get().favoriteMovies;
+      } else if (isFilter) {
+        _tmpDataRange = get().filterMovies;
+      } else {
+        _tmpDataRange = get().movies;
+      }
+
+      _tmpDataRange = _tmpDataRange.filter(item => {
+        const { info } = item;
+        const { release_date } = info;
+        let _releaseDate = convertLocalDate(release_date);
+        let arrayReleaseDate = _releaseDate.split(" ");
+        _releaseDate = arrayReleaseDate[0];
+        return (_dateRange.includes(_releaseDate)) && item;
+      });
+
+      set((state) => ({ dataDateRange: _tmpDataRange }));
+    }
+
   },
   addMovie: (movies) => {
 

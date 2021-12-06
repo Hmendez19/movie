@@ -1,7 +1,49 @@
 .container-subtitle{
-    border-bottom: 1px solid #eee;
-    margin-bottom: 1rem;
-     h2{
-        color: #ffffff;
-     }
+   border-bottom: 1px solid #eee;
+   margin-bottom: 1rem;
+   display: flex;
+   justify-content: flex-end;
+   align-items: center;
+
+   .container-date{
+      width: 25%;
+   }
+   
+   >div:first-child{
+      margin-right: 1rem;
+   }
+
+   .lb-date{
+      background: #415366;
+      padding: 8px 0px;
+      padding-right: 0px;
+      padding-left: 0px;
+   }
+
+   h2{
+      color: #ffffff;
+   }
+
+   .input-group{
+      display: flex;
+      align-items: center;
+   }
+}
+
+
+
+@media (max-width:767px){
+   .container-subtitle {
+      border-bottom: 1px solid #eee;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      flex-direction: column;
+
+      .container-date{
+         width: 100%!important;
+      }
+  }
+
 }
