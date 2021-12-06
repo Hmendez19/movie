@@ -135,4 +135,4 @@ json-server --watch moviedata.json
  ```
 
  ### DEMO
- ![Demo gif](https://github.com/Hmendez19/movie/blob/main/demo.gif)
+ ![Demo gif](https://github.com/Hmendez19/movie/blob/main/demo2.gif)
