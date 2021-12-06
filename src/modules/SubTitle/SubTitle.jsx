@@ -1,25 +1,36 @@
 import { useEffect } from "react";
 import { useForm } from "../../hook/useForm";
-import {getDateRange} from "../../utils/Utils";
-import {useMovieStore} from "../../store/store";
+import { getDateRange } from "../../utils/Utils";
+import { useMovieStore } from "../../store/store";
 import "./css/subtitle.css";
+import Swal from "sweetalert2";
 const SubTitle = () => {
     const [inputs, handleChange] = useForm({
         initialdate: "",
         finaldate: ""
     });
 
-   const findMovieByDateRange= useMovieStore((state)=>state.findMovieByDateRange);
-   const dataDateRange= useMovieStore((state)=>state.dataDateRange);
+    const findMovieByDateRange = useMovieStore((state) => state.findMovieByDateRange);
+    const dataDateRange = useMovieStore((state) => state.dataDateRange);
 
     useEffect(() => {
         const { initialdate, finaldate } = inputs;
-        if(initialdate.trim()!=="" && finaldate.trim()!==""){
-             let _rangeDate=getDateRange(initialdate,finaldate);
-             console.log(_rangeDate);
-             findMovieByDateRange(_rangeDate);
-             console.log(dataDateRange);
-        }else{
+        if (initialdate.trim() !== "" && finaldate.trim() !== "") {
+            setTimeout(() => {
+                if ((new Date(initialdate).getTime() > new Date(finaldate).getTime())) {
+                    Swal.fire({
+                        title: "La fecha de inicio debe ser menor a la fecha final",
+                        text: '',
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 3500
+                    });
+                } else {
+                    let _rangeDate = getDateRange(initialdate, finaldate);
+                    findMovieByDateRange(_rangeDate);
+                }
+            }, 1000);
+        } else {
             findMovieByDateRange([]);
         }
     }, [inputs]);

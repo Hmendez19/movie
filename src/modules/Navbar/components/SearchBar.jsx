@@ -17,8 +17,6 @@ const SearchBar = (props) => {
                 setGlobalTimeOut(null);
                 if (valueSearch === lastValueSearch) {
                     let _movies = findMovie(valueSearch);
-                    console.log(valueSearch);
-                    console.log(_movies);
                 }
             }, 500);
 

@@ -1,82 +1,135 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-
+# API CINE LEON
+----
 ### Instalar paquetes
 - npm install
-### json-server
+### Json-server
 - instalar json-server
    - npm install -g json-server
 cd src/FakeRequests/
 json-server --watch moviedata.json 
+  **Este se abrirá en el puerto 3000**
   
-### ejecutar aplicación
+### Ejecutar aplicación front end
 - npm start
+
+### Ejecutar server mailer
+- cd src/serverApiMailer
+- node server
+   **Estará a la escucha en el puerto 3004**
+
+### Endpoint Elaborado con express
+ - #### Enviar mensaje 
+    - Url: http://localhost:3004/send
+    - Método: POST
+    - Parámetros:
+       ```json
+       {
+        "year": 2013,
+        "title": "Rush",
+        "info": {
+            "directors": ["Ron Howard"],
+            "release_date": "2013-09-02T00:00:00Z",
+            "rating": 8.3,
+            "genres": [
+                "Action",
+                "Biography",
+                "Drama",
+                "Sport"
+            ],
+            "image_url": "https://ia.media-imdb.com/images/M/MV5BMTQyMDE0MTY0OV5BMl5BanBnXkFtZTcwMjI2OTI0OQ@@._V1_SX400_.jpg",
+            "plot": "A re-creation of the merciless 1970s rivalry between Formula One rivals James Hunt and Niki Lauda.",
+            "rank": 2,
+            "running_time_secs": 7380,
+            "actors": [
+                "Daniel Bruhl",
+                "Chris Hemsworth",
+                "Olivia Wilde"
+            ]
+        }
+    }
+       ```
+      * Response
+        **Code:200**
+        ```json
+         {
+           "message": "Correo enviado exitosamente",
+           "valid": true
+         }
+        ```
+
+        **Code:400**
+        ```json
+         {
+           "message": "No se puedo enviar el mensaje",
+           "valid": false
+         }
+        ```
+
+- #### Obtener las películas
+    - Se tomó el json para simular la api ejecutada con json-server
+    - Url:  http://localhost:3000/movies/
+    - Método: GET
+    - Parámetros:
+      ```javascript
+         - apikey: d489d640
+         - s : "nombre de la película"
+      ```
+   * Response
+        **Code:200**
+   ```json
+   [
+    {
+        "year": 2013,
+        "title": "Rush",
+        "info": {
+            "directors": ["Ron Howard"],
+            "release_date": "2013-09-02T00:00:00Z",
+            "rating": 8.3,
+            "genres": [
+                "Action",
+                "Biography",
+                "Drama",
+                "Sport"
+            ],
+            "image_url": "https://ia.media-imdb.com/images/M/MV5BMTQyMDE0MTY0OV5BMl5BanBnXkFtZTcwMjI2OTI0OQ@@._V1_SX400_.jpg",
+            "plot": "A re-creation of the merciless 1970s rivalry between Formula One rivals James Hunt and Niki Lauda.",
+            "rank": 2,
+            "running_time_secs": 7380,
+            "actors": [
+                "Daniel Bruhl",
+                "Chris Hemsworth",
+                "Olivia Wilde"
+            ]
+        }
+    },
+    {
+        "year": 2013,
+        "title": "Prisoners",
+        "info": {
+            "directors": ["Denis Villeneuve"],
+            "release_date": "2013-08-30T00:00:00Z",
+            "rating": 8.2,
+            "genres": [
+                "Crime",
+                "Drama",
+                "Thriller"
+            ],
+            "image_url": "https://ia.media-imdb.com/images/M/MV5BMTg0NTIzMjQ1NV5BMl5BanBnXkFtZTcwNDc3MzM5OQ@@._V1_SX400_.jpg",
+            "plot": "When Keller Dover's daughter and her friend go missing, he takes matters into his own hands as the police pursue multiple leads and the pressure mounts. But just how far will this desperate father go to protect his family?",
+            "rank": 3,
+            "running_time_secs": 9180,
+            "actors": [
+                "Hugh Jackman",
+                "Jake Gyllenhaal",
+                "Viola Davis"
+            ]
+        }
+    }]
+   ```
+**Response error**
+   ```json
+      {
+       "Response": "False",
+       "Error": "Incorrect IMDb ID."
+      }
+ ```

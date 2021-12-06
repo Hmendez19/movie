@@ -36,3 +36,13 @@ export const getDateRange = (initialDate="", finalate = "") => {
     datesRange.push(`${_arrFecha[2]}/${_arrFecha[1]}/${_arrFecha[0]}`);
     return datesRange;
 }
+
+
+export const imageToDataUrl = url => fetch(url)
+  .then(response => response.blob())
+  .then(blob => new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onloadend = () => resolve(reader.result)
+    reader.onerror = reject
+    reader.readAsDataURL(blob)
+  }))

@@ -5,7 +5,9 @@ import Swal from 'sweetalert2';
 import ModalShare from "../../ModalShare/ModalShare";
 import { convertLocalDate } from "../../../utils/Utils";
 import { useMovieStore } from "../../../store/store";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { ERROR_MESSAGE } from "../../../utils/Config";
+
 const CardItem = (props) => {
     const { item, isFavorite = false } = props;
     const [isFavoriteItem, setIsFavoriteItem] = useState(isFavorite);
@@ -14,10 +16,10 @@ const CardItem = (props) => {
 
     const addFavoriteMovie = useMovieStore((state) => state.addFavoriteMovie);
     const favoriteMovies = useMovieStore((state) => state.favoriteMovies);
-    const flag=(favoriteMovies.length>0 && favoriteMovies.find(mv => mv.info.image_url === image_url)!==undefined);
+    const flag = (favoriteMovies.length > 0 && favoriteMovies.find(mv => mv.info.image_url === image_url) !== undefined);
 
 
-    const handlerFavoriteclick = (e,_flag) => {
+    const handlerFavoriteclick = (e, _flag) => {
         e.preventDefault();
 
         setIsFavoriteItem(prev => {
@@ -40,10 +42,50 @@ const CardItem = (props) => {
         ModalManager.open(<ModalShare item={item} handlerSendMailer={handlerSendMailer} onRequestClose={() => console.log("Modal cerrado")} />);
     }
 
-    const handlerSendMailer = (e, item) => {
+    const handlerSendMailer = async (e, item, inputEmail, alertMessage, template,ModalManager) => {
         e.preventDefault();
-        console.log(item);
+        if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(inputEmail.current.value))) {
+            inputEmail.current.focus();
+            alertMessage.current.textContent = "Ingresar un correo electrónico válido";
+        } else {
+            await sendMailer(item, inputEmail.current.value,ModalManager);
+        }
     }
+
+    const sendMailer = async (item, email,ModalManager) => {
+        try {
+            const response = await fetch("http://localhost:3004/send", {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json",
+                },
+                body: JSON.stringify({ item, email }),
+            });
+
+            if (!response.ok) {
+                throw new Error("Formato no coincide");
+            }
+
+            const rpta = await response.json();
+            ModalManager.close();
+            Swal.fire({
+                title: rpta.message,
+                text: '',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 3500
+            });
+
+        } catch (error) {
+            Swal.fire({
+                title: ERROR_MESSAGE,
+                text: '',
+                icon: 'error',
+                showConfirmButton: false,
+                timer: 3500
+            });
+        }
+    };
 
     return <>
         <div className="col">
@@ -75,7 +117,7 @@ const CardItem = (props) => {
                     {
                         !flag && <span className='text-light'>Agregar a favoritos</span>
                     }
-                    <button className='button-wrapper-icon' title="Clic para agregar/quitar a favorito" onClick={(e) => handlerFavoriteclick(e,flag)} >
+                    <button className='button-wrapper-icon' title="Clic para agregar/quitar a favorito" onClick={(e) => handlerFavoriteclick(e, flag)} >
                         <FavoriteIcon isFavoriteItem={flag} />
                     </button>
                 </div>
