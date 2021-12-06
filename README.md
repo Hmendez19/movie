@@ -133,3 +133,6 @@ json-server --watch moviedata.json
        "Error": "Incorrect IMDb ID."
       }
  ```
+
+ ### DEMO
+ ![Demo gif](https://github.com/Hmendez19/movie/blob/main/demo.gif)
