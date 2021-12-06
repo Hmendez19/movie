@@ -16,20 +16,8 @@ const SubTitle = () => {
     useEffect(() => {
         const { initialdate, finaldate } = inputs;
         if (initialdate.trim() !== "" && finaldate.trim() !== "") {
-            setTimeout(() => {
-                if ((new Date(initialdate).getTime() > new Date(finaldate).getTime())) {
-                    Swal.fire({
-                        title: "La fecha de inicio debe ser menor a la fecha final",
-                        text: '',
-                        icon: 'error',
-                        showConfirmButton: false,
-                        timer: 3500
-                    });
-                } else {
-                    let _rangeDate = getDateRange(initialdate, finaldate);
-                    findMovieByDateRange(_rangeDate);
-                }
-            }, 1000);
+            let _rangeDate = getDateRange(initialdate, finaldate);
+            findMovieByDateRange(_rangeDate);
         } else {
             findMovieByDateRange([]);
         }
